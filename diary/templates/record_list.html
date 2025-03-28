@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row text-center">
+        {% for record in object_list %}
+        <div class="col-3">
+            <div class="card mb-4 box-shadow">
+                <div class="card-header">
+                        <h4 class="my-0 font-weight-normal">{{ record.created_date }}</h4>
+                        </div>
+                        <div class="card-body">
+                            <h1 class="card-title pricing-card-title">{{ record.name }}</h1>
+                            <ul class="list-unstyled mt-3 mb-4 text-start m-23">
+                                <li>{{ record.note|truncatechars:100 }}</li>
+                                <li>{{ record.owner }}</li>
+                            </ul>
+                            <a class="btn btn-primary" href="#" role="button">Удалить</a>
+                            <a class="btn btn-primary" href="{% url 'diary:record_update' record.pk %}" role="button">Редактировать</a>
+                        </div>
+                    </div>
+                </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8"> <!--Кодировка -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Personal diary</title> <!-- Заголовок -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .background_image {
+            background-image: url('diary/templates/фон_для_главной_страницы.jpg');
+            background-size: cover;
+        }
+    </style>
+  </head>
+<body>
+<ul class="navbar-nav ml-auto">
+    <li class="nav-item">
+            <a class="nav-link" href="#">Личный дневник</a>
+    </li>
+    <li class="nav-item">
+        <a class="btn btn-primary" href="#" role="button">Создать запись</a>
+    </li>
+<!--    {% if user.is_authenticated %}-->
+<!--        <li class="nav-item">-->
+<!--            <form method="post" action="#" style="display: inline;">-->
+<!--                {% csrf_token %}-->
+<!--                <button type="submit" class="btn btn-link nav-link">Выйти-->
+<!--                </button>-->
+<!--            </form>-->
+<!--	   </li>-->
+<!--    {% else %}-->
+<!--        <li class="nav-item">-->
+<!--            <a class="nav-link" href="#">Войти</a>-->
+<!--        </li>-->
+<!--        <li class="nav-item">-->
+<!--            <a class="nav-link" href="#">Регистрация</a>-->
+<!--        </li>-->
+<!--    {% endif %}-->
+</ul>
+
+{% include 'header.html' %}
+{% block content %}{% endblock %}
+
+    <footer class="pt-4 my-md-5 pt-md-5 border-top">
+        <div class="row">
+            <div class="col-12 col-md">
+                Хроники жизни
+                <small class="d-block mb-3 text-muted">&copy; 2025</small>
+            </div>
+            <div class="col-6 col-md">
+                <h5>Категории</h5>
+                <ul class="list-unstyled text-small">
+                    <li><a class="text-muted" href="#">Рассылки</a></li>
+                    <li><a class="text-muted" href="#">Телеграм боты</a></li>
+                    <li><a class="text-muted" href="#">Полезные утилиты</a></li>
+                    <li><a class="text-muted" href="#">Веб-приложения</a></li>
+                    <li><a class="text-muted" href="#">Микросервисы</a></li>
+                </ul>
+            </div>
+            <div class="col-6 col-md">
+                <h5>Дополнительно</h5>
+                <ul class="list-unstyled text-small">
+                    <li><a class="text-muted" href="#">Мы пишем</a></li>
+                </ul>
+            </div>
+            <div class="col-6 col-md">
+                <h5>О нас</h5>
+                <ul class="list-unstyled text-small">
+                    <li><a class="text-muted" href="/contacts/">Контакты</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+<!-- Подключите статичеcкие файлы со скриптами Bootstrap -->
+</body>
+</html>
