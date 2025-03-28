@@ -7,18 +7,18 @@ from diary.models import Record
 
 # Create your views here.
 class HomeView(TemplateView):
-    template_name = "base.html"
+    template_name = "diary/base.html"
 
 
 class RecordList(ListView):
     model = Record
-    template_name = "record_list.html"
+    template_name = "diary/record_list.html"
 
 
 class RecordCreateView(CreateView):
     model = Record
     form_class = RecordForm
-    template_name = 'record_form.html'
+    template_name = 'diary/record_form.html'
     success_url = reverse_lazy('diary:record_list')
 
     def get_initial(self):
@@ -34,17 +34,17 @@ class RecordCreateView(CreateView):
 class RecordUpdateView(UpdateView):
     model = Record
     form_class = RecordForm
-    template_name = 'record_form.html'
+    template_name = 'diary/record_form.html'
     success_url = reverse_lazy('diary:record_list')
 
 
 class RecordDetailView(DetailView):
     model = Record
-    template_name = "record_detail.html"
+    template_name = "diary/record_detail.html"
 
 
 class RecordDeleteView(DeleteView):
     model = Record
     success_url = reverse_lazy('diary:record_list')
-    template_name = "record_confirm_delete.html"
+    template_name = "diary/record_confirm_delete.html"
 

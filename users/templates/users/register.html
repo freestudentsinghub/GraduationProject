@@ -1,6 +1,7 @@
-{% extends 'base.html' %}
-{% block title %}Создать заметку{% endblock %}
+{% extends 'diary/base.html' %}
+{% block title %}Login{% endblock %}
 {% block content %}
+<h2>Регистрация</h2>
 <div class="container">
     <div class="row">
         <div class="col">
@@ -9,13 +10,7 @@
                     <div class="card-body">
                         {% csrf_token %}
                         {{ form.as_p }}
-                        <button type="submit" class="btn btn-primary">
-                            {% if object %}
-                            Сохранить
-                            {% else %}
-                            Создать
-                            {% endif %}
-                        </button>
+                        <button type="submit" class="btn btn-primary">Регистрация</button>
                     </div>
                 </div>
             </form>

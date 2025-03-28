@@ -15,30 +15,30 @@
 <body>
 <ul class="navbar-nav ml-auto">
     <li class="nav-item">
-            <a class="nav-link" href="#">Личный дневник</a>
+            <a class="nav-link" href="{% url 'diary:record_list' %}">Личный дневник</a>
     </li>
     <li class="nav-item">
-        <a class="btn btn-primary" href="#" role="button">Создать запись</a>
+        <a class="btn btn-primary" href="{% url 'diary:record_create' %}" role="button">Создать запись</a>
     </li>
-<!--    {% if user.is_authenticated %}-->
-<!--        <li class="nav-item">-->
-<!--            <form method="post" action="#" style="display: inline;">-->
-<!--                {% csrf_token %}-->
-<!--                <button type="submit" class="btn btn-link nav-link">Выйти-->
-<!--                </button>-->
-<!--            </form>-->
-<!--	   </li>-->
-<!--    {% else %}-->
-<!--        <li class="nav-item">-->
-<!--            <a class="nav-link" href="#">Войти</a>-->
-<!--        </li>-->
-<!--        <li class="nav-item">-->
-<!--            <a class="nav-link" href="#">Регистрация</a>-->
-<!--        </li>-->
-<!--    {% endif %}-->
+    {% if user.is_authenticated %}
+        <li class="nav-item">
+            <form method="post" action="#" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-link nav-link">Выйти
+                </button>
+            </form>
+	   </li>
+    {% else %}
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'users:login' %}">Войти</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'users:register' %}">Регистрация</a>
+        </li>
+    {% endif %}
 </ul>
 
-{% include 'header.html' %}
+{% include 'diary/header.html' %}
 {% block content %}{% endblock %}
 
     <footer class="pt-4 my-md-5 pt-md-5 border-top">
