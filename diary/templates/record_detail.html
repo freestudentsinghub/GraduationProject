@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %}Страница заметки{% endblock %}
+{% block content %}
+<body>
+    <h1>Информация о продукте</h1>
+    <p>Заголовок: {{ object.name }}</p>
+    <p>Описание: {{ object.note }}</p>
+    <p>Пользователь: {{ object.owner }}</p>
+    <p>Дата созданя: {{ object.created_date }}</p>
+</body>
+{% endblock %}

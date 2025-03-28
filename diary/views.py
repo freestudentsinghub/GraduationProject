@@ -1,5 +1,5 @@
 from django.urls import reverse_lazy
-from django.views.generic import TemplateView, ListView, CreateView, UpdateView
+from django.views.generic import TemplateView, ListView, CreateView, UpdateView, DetailView, DeleteView
 
 from diary.forms import RecordForm
 from diary.models import Record
@@ -36,4 +36,15 @@ class RecordUpdateView(UpdateView):
     form_class = RecordForm
     template_name = 'record_form.html'
     success_url = reverse_lazy('diary:record_list')
+
+
+class RecordDetailView(DetailView):
+    model = Record
+    template_name = "record_detail.html"
+
+
+class RecordDeleteView(DeleteView):
+    model = Record
+    success_url = reverse_lazy('diary:record_list')
+    template_name = "record_confirm_delete.html"
 
