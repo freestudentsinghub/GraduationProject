@@ -2,7 +2,8 @@ from django.urls import path
 from django.views.decorators.cache import cache_page
 
 
-from diary.views import HomeView, RecordList, RecordCreateView, RecordUpdateView, RecordDetailView, RecordDeleteView
+from diary.views import HomeView, RecordList, RecordCreateView, RecordUpdateView, RecordDetailView, RecordDeleteView, \
+    DiarySearchView
 
 app_name = 'diary'
 
@@ -13,4 +14,5 @@ urlpatterns = [
     path('record/update/<int:pk>', RecordUpdateView.as_view(), name='record_update'),
     path('record/<int:pk>', RecordDetailView.as_view(), name='record_detail'),
     path('record/delete/<int:pk>', RecordDeleteView.as_view(), name='record_delete'),
+    path('search', DiarySearchView.as_view(), name='diary_search'),
 ]
