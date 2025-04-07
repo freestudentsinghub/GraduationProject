@@ -14,6 +14,10 @@ class RecordList(ListView):
     model = Record
     template_name = "diary/record_list.html"
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.filter(owner=self.request.user)
+
 
 class RecordCreateView(CreateView):
     model = Record
@@ -37,6 +41,10 @@ class RecordUpdateView(UpdateView):
     template_name = 'diary/record_form.html'
     success_url = reverse_lazy('diary:record_list')
 
+    def test_func(self):
+        obj = self.get_object()
+        return obj.owner == self.request.user
+
 
 class RecordDetailView(DetailView):
     model = Record
@@ -47,4 +55,8 @@ class RecordDeleteView(DeleteView):
     model = Record
     success_url = reverse_lazy('diary:record_list')
     template_name = "diary/record_confirm_delete.html"
+
+    def test_func(self):
+        obj = self.get_object()
+        return obj.owner == self.request.user
 

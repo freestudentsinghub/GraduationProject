@@ -2,9 +2,6 @@
 
 {% block content %}
 {% if user.is_authenticated %}
-     <p>Добро пожаловать {{ user.username }}</p>
-{% endif %}
-{% if user.is_owner%}
 <div class="container">
     <div class="row text-center">
         {% for record in object_list %}
@@ -19,7 +16,7 @@
                                 <li>{{ record.note|truncatechars:100 }}</li>
                                 <li>{{ record.owner }}</li>
                             </ul>
-                            {% if user.is_authenticated %}
+                            {% if user == record.owner %}
                             <a class="btn btn-primary" href="{% url 'diary:record_update' record.pk %}" role="button">Редактировать</a>
                             <a class="btn btn-primary" href="{% url 'diary:record_detail' record.pk %}" role="button">Посмотреть полностью</a>
                             <a class="btn btn-primary" href="{% url 'diary:record_delete' record.pk %}" role="button">Удалить</a>
@@ -31,7 +28,7 @@
     </div>
 </div>
 {% else %}
-<p>Вы не создали не одну заметку</p>
-<a class="btn btn-primary" href="{% url 'diary:record_create' %}" role="button">Создать заметку</a>
+<p>Вам необходимо войти, чтобы просматривать ваши заметки.</p>
+<a class="btn btn-primary" href="{% url 'users:login' %}" role="button">Войти</a>
 {% endif %}
 {% endblock %}
