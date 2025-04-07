@@ -6,10 +6,13 @@
         <a class="p-2 btn btn-outline-primary" href="/contacts/">Контакты</a>
     </nav>
     </div>
-
+    {% if user.is_authenticated %}
+     <p>Добро пожаловать {{ user.username }}</p>
+    {% else %}
+    <p>Добро пожаловать на сайт</p>
+    {% endif %}
     <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
         <h1 class="display-4">Хроники жизни</h1>
         <p class="lead">Хроники жизни - это место где ты можешь с легкостью записывать все интересное в твоей жизни и не боятся что это попадет в злые руки</p>
     </div>
-
 </header>
