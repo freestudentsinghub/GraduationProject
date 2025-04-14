@@ -11,3 +11,4 @@ class RegisterView(CreateView):
     def form_valid(self, form):
         user = form.save()
         return super().form_valid(form)
+

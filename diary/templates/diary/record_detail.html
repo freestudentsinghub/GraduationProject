@@ -7,5 +7,6 @@
     <p>Описание: {{ object.note }}</p>
     <p>Пользователь: {{ object.owner }}</p>
     <p>Дата созданя: {{ object.created_date }}</p>
+    <a class="btn btn-primary" href="{% url 'diary:record_list' %}" role="button">Назад</a>
 </body>
 {% endblock %}

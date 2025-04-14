@@ -6,7 +6,7 @@ from diary.models import Record
 class RecordForm(ModelForm):
     class Meta:
         model = Record
-        fields = "__all__"
+        exclude = ['owner']
 
 
 class DiarySearchForm(forms.Form):

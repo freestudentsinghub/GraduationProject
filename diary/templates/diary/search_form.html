@@ -24,6 +24,7 @@
                     <p class="text-start">{{ record.name }}</p>
                     <p class="text-start">Текст записи:</p>
                     <p class="text-start">{{ record.note }}</p>
+                    <a class="btn btn-primary" href="{% url 'diary:record_detail' record.pk %}" role="button">Перейти к записе</a>
                     <hr>
                     {% empty %}
                     Записей не найдено

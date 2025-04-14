@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import TemplateView, ListView, CreateView, UpdateView, DetailView, DeleteView
-
+from django.contrib.auth.mixins import LoginRequiredMixin
 from diary.forms import RecordForm, DiarySearchForm
 from diary.models import Record
 from django.db.models import Q
@@ -33,7 +33,7 @@ class RecordList(ListView):
             return Record.objects.none()
 
 
-class RecordCreateView(CreateView):
+class RecordCreateView(LoginRequiredMixin, CreateView):
     model = Record
     form_class = RecordForm
     template_name = 'diary/record_form.html'
@@ -49,7 +49,7 @@ class RecordCreateView(CreateView):
         return super().form_valid(form)
 
 
-class RecordUpdateView(UpdateView):
+class RecordUpdateView(LoginRequiredMixin, UpdateView):
     model = Record
     form_class = RecordForm
     template_name = 'diary/record_form.html'
@@ -65,7 +65,7 @@ class RecordDetailView(DetailView):
     template_name = "diary/record_detail.html"
 
 
-class RecordDeleteView(DeleteView):
+class RecordDeleteView(LoginRequiredMixin, DeleteView):
     model = Record
     success_url = reverse_lazy('diary:record_list')
     template_name = "diary/record_confirm_delete.html"
