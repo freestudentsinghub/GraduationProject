@@ -1,34 +1,51 @@
 {% extends 'diary/base.html' %}
 
 {% block content %}
-{% if user.is_authenticated %}
-<div class="container">
-    <div class="row text-center">
-        {% for record in object_list %}
-        <div class="col-3">
-            <div class="card mb-4 box-shadow">
-                <div class="card-header">
-                        <h4 class="my-0 font-weight-normal">{{ record.created_date }}</h4>
-                        </div>
-                        <div class="card-body">
-                            <h1 class="card-title pricing-card-title">{{ record.name }}</h1>
-                            <ul class="list-unstyled mt-3 mb-4 text-start m-23">
-                                <li>{{ record.note|truncatechars:100 }}</li>
-                                <li>{{ record.owner }}</li>
-                            </ul>
-                            {% if user == record.owner %}
-                            <a class="btn btn-primary" href="{% url 'diary:record_update' record.pk %}" role="button">Редактировать</a>
-                            <a class="btn btn-primary" href="{% url 'diary:record_detail' record.pk %}" role="button">Посмотреть полностью</a>
-                            <a class="btn btn-primary" href="{% url 'diary:record_delete' record.pk %}" role="button">Удалить</a>
-                            {% endif %}
+
+<div class="container mt-5">
+    {% if user.is_authenticated %}
+        <h2 class="text-center">Записи моего дневника</h2>
+        {% if object_list %}
+            <div class="row row-cols-1 row-cols-md-3 g-4">
+                {% for record in object_list %}
+                    <div class="col">
+                        <div class="card shadow-sm">
+                            <div class="card-header">
+                                <h4 class="my-0 font-weight-normal">{{ record.created_date|date:"Y-m-d H:i:s" }}</h4>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">{{ record.name }}</h5>
+                                <p class="card-text">{{ record.note|truncatewords_html:30 }}</p>
+                                <p class="card-text"><small class="text-muted">Автор: {{ record.owner }}</small></p>
+
+                                {% if user == record.owner %}
+                                    <a href="{% url 'diary:record_update' record.pk %}" class="btn btn-primary btn-sm">Редактировать</a>
+                                    <a href="{% url 'diary:record_detail' record.pk %}" class="btn btn-info btn-sm">Подробнее</a>
+                                    <a href="{% url 'diary:record_delete' record.pk %}" class="btn btn-danger btn-sm">Удалить</a>
+                                {% endif %}
+                            </div>
                         </div>
                     </div>
-                </div>
-        {% endfor %}
-    </div>
+                {% empty %}
+                    <div class="alert alert-warning mt-4" role="alert">
+                        Пока нет ни одной записи.
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="alert alert-warning mt-4" role="alert">
+                Записей пока нет.
+            </div>
+        {% endif %}
+    {% else %}
+        <div class="jumbotron jumbotron-fluid mt-5">
+          <div class="container">
+            <h1 class="display-4">Добро пожаловать!</h1>
+            <p class="lead">Чтобы просмотреть записи, пожалуйста войдите в систему.</p>
+            <a class="btn btn-primary btn-lg" href="{% url 'users:login' %}" role="button">Войти</a>
+          </div>
+        </div>
+    {% endif %}
 </div>
-{% else %}
-<p>Вам необходимо войти, чтобы просматривать ваши заметки.</p>
-<a class="btn btn-primary" href="{% url 'users:login' %}" role="button">Войти</a>
-{% endif %}
+
 {% endblock %}

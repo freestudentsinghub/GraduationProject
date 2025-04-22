@@ -1,57 +1,62 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ru">
-  <head>
-    <meta charset="utf-8"> <!--Кодировка -->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Personal diary</title> <!-- Заголовок -->
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Personal Diary</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-        .background_image {
-            background-image: url('diary/templates/фон_для_главной_страницы.jpg');
-            background-size: cover;
-        }
-    </style>
-  </head>
+    <style> body { font-family: Arial, sans-serif; color: #333; background-color: #fafafa; } /* Навигационная панель */ .navbar { background-color: #007bff !important; } .navbar-light .navbar-nav .nav-link { color: white !important; } /* Футер */ footer { padding-top: 3rem; margin-top: auto; border-top: 1px solid rgba(0,0,0,.1); background-color: #fff; } h5 {font-weight: bold;} a.text-muted { transition: all .3s ease-in-out; } a.text-muted:hover { color: #007bff !important; } </style>
+</head>
+
 <body>
-<ul class="navbar-nav ml-auto">
-    <li class="nav-item">
-            <a class="nav-link" href="{% url 'diary:record_list' %}">Личный дневник</a>
-    </li>
-    <li class="nav-item">
-            <a class="nav-link" href="{% url 'diary:diary_search' %}">Поиск своих записей</a>
-    </li>
-    <li class="nav-item">
-        <a class="btn btn-primary" href="{% url 'diary:record_create' %}" role="button">Создать запись</a>
-    </li>
-    {% if user.is_authenticated %}
-        <li class="nav-item">
-            <form method="post" action="{% url 'users:logout' %}" style="display: inline;">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-link nav-link">Выйти</button>
-            </form>
-        </li>
-    {% else %}
-        <li class="nav-item">
-            <a class="nav-link" href="{% url 'users:login' %}">Войти</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{% url 'users:register' %}">Регистрация</a>
-        </li>
-    {% endif %}
-</ul>
 
-{% include 'diary/header.html' %}
-{% block content %}{% endblock %}
+<!-- Навигационная панель -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+    <a class="navbar-brand" href="{% url 'diary:home' %}">Хроники жизни</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav mr-auto">
+            <a class="nav-item nav-link active" href="{% url 'diary:record_list' %}">Дневник<span class="sr-only">(current)</span></a>
+            <a class="nav-item nav-link" href="{% url 'diary:diary_search' %}">Поиск записей</a>
+        </div>
+        <div class="ml-auto">
+            {% if not user.is_authenticated %}
+                <a class="btn btn-outline-light" href="{% url 'users:login' %}">Вход</a>
+                <a class="btn btn-success" href="{% url 'users:register' %}">Регистрация</a>
+            {% else %}
+                <a class="btn btn-outline-light" href="{% url 'diary:record_create' %}">Новая запись</a>
+                <form method="post" action="{% url 'users:logout' %}" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Выход</button>
+                </form>
+            {% endif %}
+        </div>
+    </div>
+</nav>
 
-    <footer class="pt-4 my-md-5 pt-md-5 border-top">
+<!-- Основная область -->
+<div class="container py-5">
+    {% include 'diary/header.html' %}
+    {% block content %}{% endblock %}
+</div>
+
+<!-- Футер -->
+<footer class="py-5 mt-5">
+    <div class="container">
         <div class="row">
-            <div class="col-12 col-md">
-                Хроники жизни
-                <small class="d-block mb-3 text-muted">&copy; 2025</small>
+            <div class="col-sm-6 col-md-4">
+                <h5>Меню</h5>
+                <ul class="list-unstyled">
+                    <li><a class="text-muted" href="{% url 'diary:record_list' %}">Мои записи</a></li>
+                    <li><a class="text-muted" href="{% url 'diary:diary_search' %}">Поиск записей</a></li>
+                </ul>
             </div>
-            <div class="col-6 col-md">
+
+            <div class="col-sm-6 col-md-4">
                 <h5>Категории</h5>
-                <ul class="list-unstyled text-small">
+                <ul class="list-unstyled">
                     <li><a class="text-muted" href="#">Рассылки</a></li>
                     <li><a class="text-muted" href="#">Телеграм боты</a></li>
                     <li><a class="text-muted" href="#">Полезные утилиты</a></li>
@@ -59,21 +64,24 @@
                     <li><a class="text-muted" href="#">Микросервисы</a></li>
                 </ul>
             </div>
-            <div class="col-6 col-md">
-                <h5>Дополнительно</h5>
-                <ul class="list-unstyled text-small">
-                    <li><a class="text-muted" href="#">Мы пишем</a></li>
-                </ul>
-            </div>
-            <div class="col-6 col-md">
-                <h5>О нас</h5>
-                <ul class="list-unstyled text-small">
+
+            <div class="col-sm-6 col-md-4">
+                <h5>О проекте</h5>
+                <ul class="list-unstyled">
+                    <li><a class="text-muted" href="/about/">О нас</a></li>
                     <li><a class="text-muted" href="/contacts/">Контакты</a></li>
                 </ul>
             </div>
         </div>
-    </footer>
+        <hr>
+        <div class="text-center small text-muted">© 2025 Все права защищены</div>
+    </div>
+</footer>
 
-<!-- Подключите статичеcкие файлы со скриптами Bootstrap -->
+<!-- Подключение скриптов Bootstrap -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 </body>
 </html>

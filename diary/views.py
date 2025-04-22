@@ -10,10 +10,10 @@ from django.db.models import Q
 
 class DairyListMixin:
     def get_context_data(self, *, object_list=None, **kwargs):
-        ct = super().get_context_data(object_list=object_list, **kwargs)
-        qs = Record.objects.filter(user=self.request.user)
-        ct['date_list'] = qs.values_list('created_date', flat=True).distinct()
-        return ct
+        context = super().get_context_data(object_list=object_list, **kwargs)
+        records = Record.objects.filter(user=self.request.user)
+        context['date_list'] = records.values_list('created_date', flat=True).distinct()
+        return context
 
 
 # Create your views here.

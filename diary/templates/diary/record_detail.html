@@ -1,12 +1,41 @@
 {% extends 'diary/base.html' %}
-{% block title %}Страница заметки{% endblock %}
+
+{% block title %}Заметка | {{ object.name }}{% endblock %}
+
 {% block content %}
-<body>
-    <h1>Информация о продукте</h1>
-    <p>Заголовок: {{ object.name }}</p>
-    <p>Описание: {{ object.note }}</p>
-    <p>Пользователь: {{ object.owner }}</p>
-    <p>Дата созданя: {{ object.created_date }}</p>
-    <a class="btn btn-primary" href="{% url 'diary:record_list' %}" role="button">Назад</a>
-</body>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header">
+                    <h1 class="card-title text-center">Информация о заметке</h1>
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped">
+                        <tbody>
+                            <tr>
+                                <th scope="row">Название:</th>
+                                <td>{{ object.name }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Описание:</th>
+                                <td>{{ object.note }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Пользователь:</th>
+                                <td>{{ object.owner }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Дата создания:</th>
+                                <td>{{ object.created_date|date:'Y-m-d H:i' }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <a href="{% url 'diary:record_list' %}" class="btn btn-primary">Назад</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

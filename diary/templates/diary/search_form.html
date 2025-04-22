@@ -1,36 +1,50 @@
-{% extends 'diary/record_list.html' %}
+{% extends 'diary/base.html' %}
+
+{% block title %}Поиск записей{% endblock %}
 
 {% block content %}
-<div class="container">
-    <div class="row text-center">
-        <div class="col-12">
-            <form method='get'>
-                {% csrf_token %}
-                {{ form }}
-                <button type="submit">Поиск</button>
-            </form>
-            {% if form.errors %}
-            <ul>
-                {% for error in form.non_field_errors %}
-                <li>{{ error }}</li>
-                {% endfor %}
-            </ul>
-            {% endif %}
-            <ul>
-                {% for record in object_list %}
-                <div class="row text">
-
-                    <p class="text-start">Заголовок записи:</p>
-                    <p class="text-start">{{ record.name }}</p>
-                    <p class="text-start">Текст записи:</p>
-                    <p class="text-start">{{ record.note }}</p>
-                    <a class="btn btn-primary" href="{% url 'diary:record_detail' record.pk %}" role="button">Перейти к записе</a>
-                    <hr>
-                    {% empty %}
-                    Записей не найдено
-                    {% endfor %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <!-- Поисковая форма -->
+            <div class="card shadow mb-4">
+                <div class="card-header">
+                    <h4 class="card-title text-center">Поиск записей</h4>
                 </div>
-            </ul>
+                <div class="card-body">
+                    <form method="get">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <button type="submit" class="btn btn-primary">Искать</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Результаты поиска -->
+            {% if object_list %}
+                <div class="card shadow">
+                    <div class="card-header">
+                        <h4 class="card-title text-center">Результаты поиска</h4>
+                    </div>
+                    <div class="card-body">
+                        {% for record in object_list %}
+                            <div class="border rounded p-3 mb-3">
+                                <h5>{{ record.name }}</h5>
+                                <p>{{ record.note|truncatewords:30 }}</p>
+                                <a href="{% url 'diary:record_detail' record.pk %}" class="btn btn-primary">Открыть полную запись</a>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% elif form.errors %}
+                <div class="alert alert-danger">
+                    Произошла ошибка при поиске: {{ form.errors }}
+                </div>
+            {% else %}
+                <div class="alert alert-info">
+                    Ничего не найдено. Попробуйте изменить условия поиска.
+                </div>
+            {% endif %}
         </div>
     </div>
 </div>
