@@ -1,0 +1,45 @@
+{% extends 'diary/base.html' %}
+
+{% block title %}Создание заметки{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header">
+                    <h4 class="card-title text-center">{% if object %}Редактирование заметки{% else %}Создание новой заметки{% endif %}</h4>
+                </div>
+                <div class="card-body">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+
+                        <!-- Название заметки -->
+                        <div class="mb-3">
+                            <label for="id_name" class="form-label">Название заметки</label>
+                            {{ form.name }}
+                        </div>
+
+                        <!-- Описание заметки -->
+                        <div class="mb-3">
+                            <label for="id_note" class="form-label">Описание заметки</label>
+                            {{ form.note }}
+                        </div>
+
+                        <!-- Кнопка сохранения -->
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary">
+                                {% if object %}
+                                Сохранить
+                                {% else %}
+                                Создать
+                                {% endif %}
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
