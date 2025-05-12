@@ -19,4 +19,4 @@ RUN mkdir -p /app/media
 
 EXPOSE 8000
 
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+# CMD ["poetry", "run", "sh", "-c", "python manage.py migrate && python manage.py csu && python manage.py runserver 0.0.0.0:8000"]
